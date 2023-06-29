@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Fonction pour afficher le message de confirmation et récupérer la réponse
+confirm() {
+  read -r -p "$1 [oui/non] : " response
+  case "$response" in
+    [oO]|[oO][uU][iI]) 
+      return 0 ;;
+    *) 
+      return 1 ;;
+  esac
+}
+
+# Vérifier si le dossier "data" existe
+if [[ -d "data" ]]; then
+  # Demander confirmation avant la suppression
+  if confirm "Êtes-vous sûr de vouloir supprimer le dossier 'data' ?"; then
+    # Supprimer le dossier "data" et son contenu
+    rm -rf "data"
+    echo "Le dossier 'data' a été supprimé."
+  else
+    echo "La suppression du dossier 'data' a été annulée."
+  fi
+else
+  echo "Le dossier 'data' n'existe pas."
+fi
+
